@@ -59,7 +59,7 @@ ${trailerUrl && `<a href="${trailerUrl}">Trailer</a>`}`,
 const secretPath = `/telegraf/${bot.secretPathComponent()}`;
 
 // Set telegram webhook
-bot.telegram.setWebhook(`https://massive-panther-68.loca.lt${secretPath}`);
+bot.telegram.setWebhook(`https://boxofficerbot-production.up.railway.app${secretPath}`);
 
 const app = express();
 app.get("/", (req: Request, res: Response) => res.send("Hello World!"));
