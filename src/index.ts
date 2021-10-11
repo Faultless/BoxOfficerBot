@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 // @ts-ignore
 import express, { Request, Response } from "express";
 import { InlineQueryResult } from "telegraf/typings/core/types/typegram";
-import { getRating, getSearchResults, getTrailer, getTitle } from "./utilities";
+import { getRating, getSearchResults, getTrailer, getTitle, hasDate, hasDuration, hasGuidance } from "./utilities";
 
 // initialize configuration
 dotenv.config();
@@ -40,15 +40,23 @@ bot.on("inline_query", async (ctx) => {
 });
 
 bot.on("chosen_inline_result", async (ctx) => {
-  const { title, year } = await getTitle(ctx.chosenInlineResult.result_id);
   const { trailerUrl } = await getTrailer(ctx.chosenInlineResult.result_id);
   const { rating } = await getRating(ctx.chosenInlineResult.result_id);
+  const { title, subs, subsLinks } = await getTitle(ctx.chosenInlineResult.result_id);
+
+  const idx = subs.findIndex((x: string) => x === 'Cast & crew');
+  const idxLinks = subsLinks.findIndex((x: string) => x === 'Director');
+  const trimmedSubs = [...subs.slice(0, idx), ...subsLinks.slice(0, idxLinks)].reverse();
+  const releaseYear = trimmedSubs.find(sub => hasDate(sub));
+  const duration = trimmedSubs.find(sub => hasDuration(sub));
+  const pg = trimmedSubs.find(sub => hasGuidance(sub));
 
   bot.telegram.editMessageText(
     undefined,
     undefined,
     ctx.chosenInlineResult.inline_message_id,
-    `<b>${title} (${year})</b>
+    `<b>${title} (${releaseYear})</b> Rated ${pg}
+<b>${duration}</b>
 <b>Ratings:</b>
 ${rating && `IMDB: ⭐ ${rating}, `}
 ${trailerUrl && `<a href="${trailerUrl}">Trailer</a>`}`,

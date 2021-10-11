@@ -37,5 +37,13 @@ export const getRating = (id: string) =>
 export const getTitle = (id: string) =>
   x(buildTitleURL(id), ".ipc-page-section", {
     title: "h1",
-    year: "ul li:first-child a"
+    subsLinks: x('ul', ['li span']) as unknown as Array<string>,
+    subs: x('ul', ['li']) as unknown as Array<string>,
   });
+
+
+export const hasDate = (str: string) => str.match(/[0-9]{4}/i) !== null;
+
+export const hasDuration = (str: string) => str.match(/min$/i) !== null;
+
+export const hasGuidance = (str: string) => str.match(/[0-9]{2}/i) !== null || str.match(/^(R|E)$/) !== null;
