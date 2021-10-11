@@ -56,7 +56,7 @@ bot.on("chosen_inline_result", async (ctx) => {
     undefined,
     ctx.chosenInlineResult.inline_message_id,
     `<b>${title} (${releaseYear})</b> Rated ${pg}
-<b>${!isVideoGame(subs) && duration}</b>
+<b>${!isVideoGame(subs) ? duration : ""}</b>
 <b>Ratings:</b>
 ${rating && `IMDB: ⭐ ${rating}, `}
 ${trailerUrl && `<a href="${trailerUrl}">Trailer</a>`}`,
