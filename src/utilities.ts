@@ -46,4 +46,10 @@ export const hasDate = (str: string) => str.match(/[0-9]{4}/i) !== null;
 
 export const hasDuration = (str: string) => str.match(/min$/i) !== null;
 
-export const hasGuidance = (str: string) => str.match(/[0-9]{2}/i) !== null || str.match(/^(R|E)$/) !== null;
+export const hasGuidance = (str: string) => str.match(/PG-[0-9]{2}/i) !== null || str.match(/^(R|E|M|TV-PG)$/) !== null;
+
+export const isMovie = (s: string[]) => !isSeries(s) && !isVideoGame(s);
+
+export const isSeries = (subs: string[]) => subs.findIndex(s => s === 'TV Series') === -1;
+
+export const isVideoGame = (subs: string[]) => subs.findIndex(s => s === 'Video Game') === -1;

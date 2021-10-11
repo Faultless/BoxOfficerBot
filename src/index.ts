@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 // @ts-ignore
 import express, { Request, Response } from "express";
 import { InlineQueryResult } from "telegraf/typings/core/types/typegram";
-import { getRating, getSearchResults, getTrailer, getTitle, hasDate, hasDuration, hasGuidance } from "./utilities";
+import { getRating, getSearchResults, getTrailer, getTitle, hasDate, hasDuration, hasGuidance, isVideoGame } from "./utilities";
 
 // initialize configuration
 dotenv.config();
@@ -56,7 +56,7 @@ bot.on("chosen_inline_result", async (ctx) => {
     undefined,
     ctx.chosenInlineResult.inline_message_id,
     `<b>${title} (${releaseYear})</b> Rated ${pg}
-<b>${duration}</b>
+<b>${!isVideoGame(subs) && duration}</b>
 <b>Ratings:</b>
 ${rating && `IMDB: ⭐ ${rating}, `}
 ${trailerUrl && `<a href="${trailerUrl}">Trailer</a>`}`,
