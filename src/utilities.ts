@@ -33,3 +33,8 @@ export const getTrailer = (id: string) =>
 
 export const getRating = (id: string) =>
   x(buildRatingURL(id), { rating: ".ipl-rating-star__rating" });
+
+export const getTitle = (id: string) =>
+  x(buildTitleURL(id), ".ipc-page-section", {
+    title: "h1",
+  });

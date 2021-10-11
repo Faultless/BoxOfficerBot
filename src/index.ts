@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 // @ts-ignore
 import express, { Request, Response } from "express";
 import { InlineQueryResult } from "telegraf/typings/core/types/typegram";
-import { getRating, getSearchResults, getTrailer } from "./utilities";
+import { getRating, getSearchResults, getTrailer, getTitle } from "./utilities";
 
 // initialize configuration
 dotenv.config();
@@ -40,6 +40,7 @@ bot.on("inline_query", async (ctx) => {
 });
 
 bot.on("chosen_inline_result", async (ctx) => {
+  const { title } = await getTitle(ctx.chosenInlineResult.result_id);
   const { trailerUrl } = await getTrailer(ctx.chosenInlineResult.result_id);
   const { rating } = await getRating(ctx.chosenInlineResult.result_id);
 
@@ -47,7 +48,8 @@ bot.on("chosen_inline_result", async (ctx) => {
     undefined,
     undefined,
     ctx.chosenInlineResult.inline_message_id,
-    `<b>Ratings:</b>
+    `<b>${title}</b>
+<b>Ratings:</b>
 ${rating && `IMDB: ⭐ ${rating}, `}
 ${trailerUrl && `<a href="${trailerUrl}">Trailer</a>`}`,
     {
