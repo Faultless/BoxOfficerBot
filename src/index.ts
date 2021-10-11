@@ -40,7 +40,7 @@ bot.on("inline_query", async (ctx) => {
 });
 
 bot.on("chosen_inline_result", async (ctx) => {
-  const { title } = await getTitle(ctx.chosenInlineResult.result_id);
+  const { title, year } = await getTitle(ctx.chosenInlineResult.result_id);
   const { trailerUrl } = await getTrailer(ctx.chosenInlineResult.result_id);
   const { rating } = await getRating(ctx.chosenInlineResult.result_id);
 
@@ -48,7 +48,7 @@ bot.on("chosen_inline_result", async (ctx) => {
     undefined,
     undefined,
     ctx.chosenInlineResult.inline_message_id,
-    `<b>${title}</b>
+    `<b>${title} (${year})</b>
 <b>Ratings:</b>
 ${rating && `IMDB: ⭐ ${rating}, `}
 ${trailerUrl && `<a href="${trailerUrl}">Trailer</a>`}`,

@@ -37,4 +37,5 @@ export const getRating = (id: string) =>
 export const getTitle = (id: string) =>
   x(buildTitleURL(id), ".ipc-page-section", {
     title: "h1",
+    year: "ul li:first-child a"
   });
