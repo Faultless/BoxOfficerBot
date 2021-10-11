@@ -50,6 +50,6 @@ export const hasGuidance = (str: string) => str.match(/PG-[0-9]{2}/i) !== null |
 
 export const isMovie = (s: string[]) => !isSeries(s) && !isVideoGame(s);
 
-export const isSeries = (subs: string[]) => subs.findIndex(s => s === 'TV Series') === -1;
+export const isSeries = (subs: string[]) => subs.findIndex(s => s === 'TV Series') !== -1;
 
-export const isVideoGame = (subs: string[]) => subs.findIndex(s => s === 'Video Game') === -1;
+export const isVideoGame = (subs: string[]) => subs.findIndex(s => s === 'Video Game') !== -1;
