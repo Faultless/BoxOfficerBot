@@ -1,2 +1,2 @@
 [[build.buildpacks]]
-uri = "datamail/nodejs-phantomjs"
+uri = "https://github.com/stomita/heroku-buildpack-phantomjs"
