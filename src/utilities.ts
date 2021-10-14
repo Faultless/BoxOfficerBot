@@ -31,6 +31,11 @@ export const getTrailer = (id: string) =>
     trailerUrl: "@href",
   });
 
+export const getTrailerURL = (url: string) =>
+  x(url, "video.jw-video", {
+    trailerVideo: "@src",
+  });
+
 export const getRating = (id: string) =>
   x(buildRatingURL(id), { rating: ".ipl-rating-star__rating" });
 
