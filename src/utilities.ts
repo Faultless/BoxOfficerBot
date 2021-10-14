@@ -39,10 +39,10 @@ export const getTrailer = (id: string) =>
   });
 
 export const getTrailerURL = async (url: string) =>
-  new Promise(resolve => xPup(url, function (err, ctx) {
+  new Promise(resolve => xPup(url, (err, ctx) => {
     if (err) return;
-    var $ = cheerio.load(ctx.body);
-    var vid = $.html().match(/https:\/\/imdb-video.media-imdb.com\/[a-z0-9]+\/[a-z0-9-.]+\?Expires=[a-z0-9-.]+&Signature=[a-zA-Z0-9-.~_&=]+/g);
+    const $ = cheerio.load(ctx.body);
+    const vid = $.html().match(/https:\/\/imdb-video.media-imdb.com\/[a-z0-9]+\/[a-z0-9-.]+\?Expires=[a-z0-9-.]+&Signature=[a-zA-Z0-9-.~_&=]+/g);
     resolve(vid.pop());
   }));
 
