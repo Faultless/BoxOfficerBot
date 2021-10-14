@@ -1,2 +1,2 @@
 [[build.buildpacks]]
-uri = "heroku/nodejs-phantomjs"
+uri = "https://github.com/datamail/heroku-buildpack-nodejs-phantomjs"
