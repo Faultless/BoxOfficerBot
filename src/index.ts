@@ -41,7 +41,7 @@ bot.on("inline_query", async (ctx) => {
 
 bot.on("chosen_inline_result", async (ctx) => {
   const { trailerUrl } = await getTrailer(ctx.chosenInlineResult.result_id);
-  const { trailerVideo } = await getTrailerURL(trailerUrl);
+  const trailerVideo = await getTrailerURL(trailerUrl);
   const { rating } = await getRating(ctx.chosenInlineResult.result_id);
   const { title, subs, subsLinks } = await getTitle(ctx.chosenInlineResult.result_id);
 

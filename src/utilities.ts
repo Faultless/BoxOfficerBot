@@ -1,6 +1,13 @@
 import Xray from "x-ray";
+import Crawler from "x-ray-crawler";
+import puppeteerDriver from 'x-ray-puppeteer';
+import cheerio from 'cheerio';
 
 const x = Xray();
+const puppeteerOptions = {
+  headless: true,
+}
+const xPup = Crawler().driver(puppeteerDriver(puppeteerOptions, undefined));
 
 const SEARCH_BASE_URL = "https://imdb.com/find?q=";
 const IMDB_BASE_URL = "https://imdb.com/title";
@@ -31,10 +38,13 @@ export const getTrailer = (id: string) =>
     trailerUrl: "@href",
   });
 
-export const getTrailerURL = (url: string) =>
-  x(url, "video.jw-video", {
-    trailerVideo: "@src",
-  });
+export const getTrailerURL = async (url: string) =>
+  new Promise(resolve => xPup(url, function (err, ctx) {
+    if (err) return;
+    var $ = cheerio.load(ctx.body);
+    var vid = $.html().match(/https:\/\/imdb-video.media-imdb.com\/[a-z0-9]+\/[a-z0-9-.]+\?Expires=[a-z0-9-.]+&Signature=[a-zA-Z0-9-.~_&=]+/g);
+    resolve(vid.pop());
+  }));
 
 export const getRating = (id: string) =>
   x(buildRatingURL(id), { rating: ".ipl-rating-star__rating" });
