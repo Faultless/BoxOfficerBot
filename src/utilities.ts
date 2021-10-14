@@ -1,13 +1,15 @@
 import Xray from "x-ray";
 import Crawler from "x-ray-crawler";
-import puppeteerDriver from 'x-ray-puppeteer';
+import phantom from 'x-ray-phantom';
 import cheerio from 'cheerio';
 
 const x = Xray();
-const puppeteerOptions = {
-  headless: true,
-}
-const xPup = Crawler().driver(puppeteerDriver(puppeteerOptions, undefined));
+const phantomOptions = {
+  weak: false,
+  webSecurity: false
+};
+
+const xPhantom = Crawler().driver(phantom(phantomOptions));
 
 const SEARCH_BASE_URL = "https://imdb.com/find?q=";
 const IMDB_BASE_URL = "https://imdb.com/title";
@@ -39,7 +41,7 @@ export const getTrailer = (id: string) =>
   });
 
 export const getTrailerURL = async (url: string) =>
-  new Promise(resolve => xPup(url, (err, ctx) => {
+  new Promise(resolve => xPhantom(url, (err, ctx) => {
     if (err) return;
     const $ = cheerio.load(ctx.body);
     const vid = $.html().match(/https:\/\/imdb-video.media-imdb.com\/[a-z0-9]+\/[a-z0-9-.]+\?Expires=[a-z0-9-.]+&Signature=[a-zA-Z0-9-.~_&=]+/g);
