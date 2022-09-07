@@ -73,7 +73,7 @@ const secretPath = `/telegraf/${bot.secretPathComponent()}`;
 bot.telegram.setWebhook(`https://boxofficerbot-production.up.railway.app${secretPath}`);
 
 const app = express();
-app.get("/", (req: Request, res: Response) => res.send("Hello World!"));
+app.get("/", (req: Request, res: Response) => res.send("!"));
 
 // Set the bot API endpoint
 app.use(bot.webhookCallback(secretPath));
